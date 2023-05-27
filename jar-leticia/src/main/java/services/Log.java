@@ -23,10 +23,10 @@ public class Log {
     private static final String FILE_NAME = "log.txt";
 
     public void gerarLog() {
-
+            
         try {
             File arquivo = new File("log.txt");
-
+            
             String frase = "ATM 9 ativo";
 
             if (!arquivo.exists()) {
@@ -35,7 +35,7 @@ public class Log {
 
             List<String> logs = new ArrayList<>();
 
-            logs.add(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) + frase);
+            logs.add(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss ---")) + frase);
             Files.write(Paths.get(arquivo.getPath()), logs, StandardOpenOption.APPEND);
 
         } catch (IOException e) {

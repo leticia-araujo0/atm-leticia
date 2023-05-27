@@ -15,11 +15,14 @@ import com.github.britooo.looca.api.group.processos.ProcessoGrupo;
 import com.github.britooo.looca.api.group.servicos.Servico;
 import com.github.britooo.looca.api.group.sistema.Sistema;
 import com.github.britooo.looca.api.group.temperatura.Temperatura;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 import services.Log;
 
 /**
@@ -50,34 +53,26 @@ public class AtmLeticia {
 
         //=====================GRUPOS=================//
         DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
-
         com.github.britooo.looca.api.group.servicos.ServicoGrupo grupoDeServicos = looca.getGrupoDeServicos();
         ProcessoGrupo grupoDeProcessos = looca.getGrupoDeProcessos();
 
         //=====================CAPTANDO INFOS=================//
-        System.out.println(
-                "***Horário:*** ");
-        System.out.println(LocalDateTime.now().format(DateTimeFormatter.
-                ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM)));
+        System.out.println("***Horário:*** ");
+        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM)));
 
-        System.out.println(
-                "\n");
+        System.out.println("\n");
         System.out.println(sistema);
-
-        System.out.println(
-                "*".repeat(45));
+        System.out.println("*".repeat(45));
 
         System.out.println(memoria);
-
-        System.out.println(
-                "*".repeat(45));
+        System.out.println("*".repeat(45));
 
         System.out.println(processador);
-
-        System.out.println(
-                "*".repeat(45));
+        System.out.println("*".repeat(45));
 
         //System.out.println(temperatura);
+        
+        
         //System.out.println("*".repeat(45));
         //=====================DISCOS=================//
         List<Disco> discos = grupoDeDiscos.getDiscos();
@@ -86,29 +81,33 @@ public class AtmLeticia {
             System.out.println(disco);
         }
 
-        System.out.println(
-                "*".repeat(45));
+        System.out.println("*".repeat(45));
 
         //====================PROCESSOS=================//
         try {
-            List<Processo> processos = grupoDeProcessos.getProcessos();
+            Timer timer = new Timer();
 
-            for (Processo processo : processos) {
-                System.out.println(processo);
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    List<Processo> processos = grupoDeProcessos.getProcessos();
+                    for (Processo processo : processos) {
+                        System.out.println(processo);
+                    }
+                    System.out.println("*".repeat(45));
+                }
+            };
+
+            timer.scheduleAtFixedRate(task, 0, 5000);
+
+            //====================SERVIÇOS======================//
+            List<Servico> servicos = grupoDeServicos.getServicosAtivos();
+
+            for (Servico servico : servicos) {
+                System.out.println(servico);
             }
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        System.out.println(
-                "*".repeat(45));
-
-        //====================SERVIÇOS======================//
-        List<Servico> servicos = grupoDeServicos.getServicosAtivos();
-
-        for (Servico servico : servicos) {
-            System.out.println(servico);
         }
     }
 }
