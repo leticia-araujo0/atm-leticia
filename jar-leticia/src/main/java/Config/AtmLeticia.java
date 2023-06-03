@@ -4,6 +4,7 @@
  */
 package Config;
 
+import services.ConectarBanco;
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Disco;
 
@@ -12,10 +13,7 @@ import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
 import com.github.britooo.looca.api.group.processos.Processo;
 import com.github.britooo.looca.api.group.processos.ProcessoGrupo;
-import com.github.britooo.looca.api.group.servicos.Servico;
 import com.github.britooo.looca.api.group.sistema.Sistema;
-import com.github.britooo.looca.api.group.temperatura.Temperatura;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -23,7 +21,10 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+import org.springframework.jdbc.core.JdbcTemplate;
+import repositories.MonitorarRepository;
 import services.Log;
+import services.MonitorarService;
 
 /**
  *
@@ -34,22 +35,42 @@ public class AtmLeticia {
     public static void main(String[] args) {
 
         Scanner leitor = new Scanner(System.in);
-        Looca looca = new Looca();
-        ConexaoBanco conexao = new ConexaoBanco();
         Log gerarLog = new Log();
+
+        //=================LOOCA===============/
+        Looca looca = new Looca();
+        MonitorarService monitorarService = new MonitorarService();
+        MonitorarRepository monitorarRepository = new MonitorarRepository();
+
+        //=====CONEXÃO BANCO========//
+        ConexaoBanco conexao = new ConexaoBanco();
+        JdbcTemplate jdbcTemplate = conexao.getConnection();
+        ConectarBanco conectar = new ConectarBanco(jdbcTemplate);
 
         Sistema sistema = looca.getSistema();
         Memoria memoria = looca.getMemoria();
         Processador processador = looca.getProcessador();
-        Temperatura temperatura = looca.getTemperatura();
 
+        //==================VALIDAÇÃO LOGIN===============//
         Integer atmNum = 0;
+        Integer senha = 0;
 
         System.out.println("ATM: ");
         atmNum = leitor.nextInt();
 
-        gerarLog.gerarLog();
-        conexao.equals(looca);
+        System.out.println("Senha: ");
+        senha = leitor.nextInt();
+
+        if (atmNum.equals(9) && (senha.equals(123))) {
+            System.out.println("Login efetuado com sucesso!");
+
+          gerarLog.gerarLog();
+           
+
+        } else {
+            System.out.println("Número do ATM e/ou senha incorreto(s)!");
+            System.exit(0);
+        }
 
         //=====================GRUPOS=================//
         DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
@@ -70,10 +91,6 @@ public class AtmLeticia {
         System.out.println(processador);
         System.out.println("*".repeat(45));
 
-        //System.out.println(temperatura);
-        
-        
-        //System.out.println("*".repeat(45));
         //=====================DISCOS=================//
         List<Disco> discos = grupoDeDiscos.getDiscos();
 
@@ -84,30 +101,23 @@ public class AtmLeticia {
         System.out.println("*".repeat(45));
 
         //====================PROCESSOS=================//
-        try {
-            Timer timer = new Timer();
+        new Timer().scheduleAtFixedRate(new TimerTask() {
 
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    List<Processo> processos = grupoDeProcessos.getProcessos();
-                    for (Processo processo : processos) {
-                        System.out.println(processo);
-                    }
-                    System.out.println("*".repeat(45));
+            @Override
+            public void run() {
+                List<Processo> processos = grupoDeProcessos.getProcessos();
+                for (Processo processo : processos) {
+                    System.out.println(processo);
                 }
-            };
-
-            timer.scheduleAtFixedRate(task, 0, 5000);
-
-            //====================SERVIÇOS======================//
-            List<Servico> servicos = grupoDeServicos.getServicosAtivos();
-
-            for (Servico servico : servicos) {
-                System.out.println(servico);
+                System.out.println("*".repeat(45));
+                //monitorarService.monitorarHardware(9, 1);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        }, 0, 3000);
+
+   
+        //===============================================//
+        List<Processo> processos = grupoDeProcessos.getProcessos();
+        conectar.incluir(processos);
     }
 }

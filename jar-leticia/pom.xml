@@ -19,6 +19,7 @@
                 <groupId>com.github.britooo</groupId>
                 <artifactId>looca-api</artifactId>
                 <version>2.2.0</version>
+                  <type>jar</type>
             </dependency>
             <!-- ==================================================== -->
 
@@ -26,7 +27,8 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-jdbc</artifactId>
-                <version>5.0.5.RELEASE</version>
+                <version>6.0.7</version>
+                  <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>

@@ -12,12 +12,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * @author PC
  */
 public class ConexaoBanco {
+    
 
     private String porta = "3306";
 
     private String servidor = "localhost";
 
-    private String bancoDeDados = "cashtech";
+    private String bancoDeDados = "teste1";
 
     private String login = "root";
 

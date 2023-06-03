@@ -26,6 +26,7 @@ public class Looca {
     private DiscoGrupo grupoDeDiscos;
     private ServicoGrupo grupoDeServicos;
     private ProcessoGrupo grupoDeProcessos;
+   
 
     public Looca(Sistema sistema, Memoria memoria, Processador processador, Temperatura temperatura, DiscoGrupo grupoDeDiscos, ServicoGrupo grupoDeServicos, ProcessoGrupo grupoDeProcessos) {
         this.sistema = sistema;
