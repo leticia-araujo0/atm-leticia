@@ -22,9 +22,8 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.springframework.jdbc.core.JdbcTemplate;
-import repositories.MonitorarRepository;
 import services.Log;
-import services.MonitorarService;
+
 
 /**
  *
@@ -37,10 +36,9 @@ public class AtmLeticia {
         Scanner leitor = new Scanner(System.in);
         Log gerarLog = new Log();
 
-        //=================LOOCA===============/
+        //=================LOOCA===============//
         Looca looca = new Looca();
-        MonitorarService monitorarService = new MonitorarService();
-        MonitorarRepository monitorarRepository = new MonitorarRepository();
+        //=====================================//
 
         //=====CONEXÃO BANCO========//
         ConexaoBanco conexao = new ConexaoBanco();
@@ -74,7 +72,6 @@ public class AtmLeticia {
 
         //=====================GRUPOS=================//
         DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
-        com.github.britooo.looca.api.group.servicos.ServicoGrupo grupoDeServicos = looca.getGrupoDeServicos();
         ProcessoGrupo grupoDeProcessos = looca.getGrupoDeProcessos();
 
         //=====================CAPTANDO INFOS=================//
@@ -99,7 +96,7 @@ public class AtmLeticia {
         }
 
         System.out.println("*".repeat(45));
-
+        
         //====================PROCESSOS=================//
         new Timer().scheduleAtFixedRate(new TimerTask() {
 
@@ -110,7 +107,7 @@ public class AtmLeticia {
                     System.out.println(processo);
                 }
                 System.out.println("*".repeat(45));
-                //monitorarService.monitorarHardware(9, 1);
+             
             }
 
         }, 0, 3000);
@@ -118,6 +115,6 @@ public class AtmLeticia {
    
         //===============================================//
         List<Processo> processos = grupoDeProcessos.getProcessos();
-        conectar.incluir(processos);
+        conectar.incluir(processos,LocalDateTime.now());
     }
 }

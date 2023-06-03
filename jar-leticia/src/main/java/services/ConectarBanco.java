@@ -4,14 +4,9 @@
  */
 package services;
 
-import Config.ConexaoBanco;
-import Config.DataBase;
-import com.github.britooo.looca.api.group.discos.Disco;
 import com.github.britooo.looca.api.group.processos.Processo;
-import com.github.britooo.looca.api.group.servicos.Servico;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -26,9 +21,9 @@ public class ConectarBanco {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void incluir(List<Processo> listaProcessos) {
-        String sql = "INSERT INTO Processo(nome, pid, uso_cpu, uso_memoria, byte_utilizado, memoria_virtual_utilizada) "
-                + "VALUES (?, ?, ?, ?, ?, ?)";
+    public void incluir(List<Processo> listaProcessos, LocalDateTime dataHora) {
+        String sql = "INSERT INTO Processo(nome, pid, uso_cpu, uso_memoria, byte_utilizado, memoria_virtual_utilizada, dt_processo) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         for (Processo processo : listaProcessos) {
             jdbcTemplate.update(sql,
@@ -37,7 +32,8 @@ public class ConectarBanco {
                     processo.getUsoCpu(),
                     processo.getUsoMemoria(),
                     processo.getBytesUtilizados(),
-                    processo.getMemoriaVirtualUtilizada());
+                    processo.getMemoriaVirtualUtilizada(),
+                    dataHora);
         }
     }
 }
