@@ -6,6 +6,7 @@ package services;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -23,18 +24,18 @@ public class Log {
 
     //private static final String FILE_NAME = "log-acessos.txt";
     AtmLeticia atm = new AtmLeticia();
-    
+
     public void gerarLog() {
-            
+
         try {
             File arquivo = new File("log-acessos.txt");
-            
+
             String frase = "ATM 9 ativo";
 
             if (!arquivo.exists()) {
                 arquivo.createNewFile();
             }
-           
+
             List<String> logs = new ArrayList<>();
 
             logs.add(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss ---")) + frase);
@@ -43,4 +44,5 @@ public class Log {
             e.printStackTrace();
         }
     }
+
 }

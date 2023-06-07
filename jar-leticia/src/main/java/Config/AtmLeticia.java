@@ -128,7 +128,7 @@ public class AtmLeticia {
                 
                 ZonedDateTime dataZoned = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
                 LocalDateTime data = dataZoned.toLocalDateTime();
-                System.out.println("DATAAAAAAAAA");
+
                 System.out.println(data);
                 
                 conectar.salvarProcessos(top20, data);

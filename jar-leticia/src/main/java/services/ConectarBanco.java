@@ -5,7 +5,6 @@
 package services;
 
 import cashtech.jar.DataBase;
-import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processos.Processo;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,7 +32,6 @@ public class ConectarBanco {
         String sql = "INSERT INTO Processo(nome, pid, uso_cpu, uso_memoria, byte_utilizado, memoria_virtual_utilizada, dt_processo) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        System.out.println("DATAAAAAA " + data);
         for (Processo processo : listaProcessos) {
             jdbcTemplate.update(sql,
                     processo.getNome(),
