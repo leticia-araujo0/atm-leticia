@@ -4,6 +4,8 @@
  */
 package services;
 
+import cashtech.jar.DataBase;
+import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processos.Processo;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,16 +19,39 @@ public class ConectarBanco {
 
     private JdbcTemplate jdbcTemplate;
 
+    //=============CONEXÃO AZURE==================//
+    DataBase conexao = new DataBase();
+
+    public JdbcTemplate con = conexao.getConnection();
+    //===========================================//
+
     public ConectarBanco(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void incluir(List<Processo> listaProcessos, LocalDateTime dataHora) {
+    public void salvarProcessos(List<Processo> listaProcessos, LocalDateTime data) {
+        String sql = "INSERT INTO Processo(nome, pid, uso_cpu, uso_memoria, byte_utilizado, memoria_virtual_utilizada, dt_processo) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        System.out.println("DATAAAAAA " + data);
+        for (Processo processo : listaProcessos) {
+            jdbcTemplate.update(sql,
+                    processo.getNome(),
+                    processo.getPid(),
+                    processo.getUsoCpu(),
+                    processo.getUsoMemoria(),
+                    processo.getBytesUtilizados(),
+                    processo.getMemoriaVirtualUtilizada(),
+                    data);
+        }
+    }
+
+    public void salvarProcessosAzure(List<Processo> listaProcessos, LocalDateTime dataHora) {
         String sql = "INSERT INTO Processo(nome, pid, uso_cpu, uso_memoria, byte_utilizado, memoria_virtual_utilizada, dt_processo) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         for (Processo processo : listaProcessos) {
-            jdbcTemplate.update(sql,
+            con.update(sql,
                     processo.getNome(),
                     processo.getPid(),
                     processo.getUsoCpu(),
