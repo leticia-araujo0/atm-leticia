@@ -14,7 +14,6 @@ import com.github.britooo.looca.api.group.processador.Processador;
 import com.github.britooo.looca.api.group.processos.Processo;
 import com.github.britooo.looca.api.group.processos.ProcessoGrupo;
 import com.github.britooo.looca.api.group.sistema.Sistema;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -114,9 +113,9 @@ public class AtmLeticia {
                     Processo processoAgora = processos.stream()
                             .max(Comparator.comparingDouble(Processo::getUsoCpu))
                             .get();
-                    
+
                     top20.add(processoAgora);
-                    
+
                     processos.remove(processoAgora);
                 }
 
@@ -125,12 +124,12 @@ public class AtmLeticia {
                     System.out.println(processo);
                 }
                 System.out.println("*".repeat(45));
-                
+
                 ZonedDateTime dataZoned = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
                 LocalDateTime data = dataZoned.toLocalDateTime();
 
                 System.out.println(data);
-                
+
                 conectar.salvarProcessos(top20, data);
 
             }

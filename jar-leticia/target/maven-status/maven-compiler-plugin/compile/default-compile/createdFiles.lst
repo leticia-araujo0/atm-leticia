@@ -1,0 +1,7 @@
+Config\AtmLeticia.class
+services\ConectarBanco.class
+services\Log.class
+Config\DataBase.class
+Config\Looca.class
+Config\AtmLeticia$1.class
+Config\ConexaoBanco.class

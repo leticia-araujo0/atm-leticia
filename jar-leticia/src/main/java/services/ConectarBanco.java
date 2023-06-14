@@ -4,7 +4,7 @@
  */
 package services;
 
-import cashtech.jar.DataBase;
+import Config.DataBase;
 import com.github.britooo.looca.api.group.processos.Processo;
 import java.time.LocalDateTime;
 import java.util.List;

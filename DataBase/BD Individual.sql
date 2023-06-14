@@ -1,6 +1,6 @@
-create database atm9;
+create database individual;
 
-use atm9;
+use individual;
 
 CREATE TABLE Processo (
 	id INT NOT NULL AUTO_INCREMENT,	
@@ -20,6 +20,7 @@ select * from processo;
 select * from Processo order by id desc;
 
 select * from Processo order by id;
+
 
 
 -- -----------------------------------------------------

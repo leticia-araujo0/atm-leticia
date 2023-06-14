@@ -4,6 +4,7 @@
  */
 package services;
 
+import Config.AtmLeticia;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,7 +15,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import leticia.jar.AtmLeticia;
 
 /**
  *
@@ -22,7 +22,6 @@ import leticia.jar.AtmLeticia;
  */
 public class Log {
 
-    //private static final String FILE_NAME = "log-acessos.txt";
     AtmLeticia atm = new AtmLeticia();
 
     public void gerarLog() {

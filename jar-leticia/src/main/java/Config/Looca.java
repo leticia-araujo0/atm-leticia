@@ -12,7 +12,6 @@ import com.github.britooo.looca.api.group.servicos.ServicoGrupo;
 import com.github.britooo.looca.api.group.sistema.Sistema;
 import com.github.britooo.looca.api.group.temperatura.Temperatura;
 
-
 /**
  *
  * @author PC
@@ -26,7 +25,6 @@ public class Looca {
     private DiscoGrupo grupoDeDiscos;
     private ServicoGrupo grupoDeServicos;
     private ProcessoGrupo grupoDeProcessos;
-   
 
     public Looca(Sistema sistema, Memoria memoria, Processador processador, Temperatura temperatura, DiscoGrupo grupoDeDiscos, ServicoGrupo grupoDeServicos, ProcessoGrupo grupoDeProcessos) {
         this.sistema = sistema;
@@ -36,6 +34,10 @@ public class Looca {
         this.grupoDeDiscos = grupoDeDiscos;
         this.grupoDeServicos = grupoDeServicos;
         this.grupoDeProcessos = grupoDeProcessos;
+    }
+
+    Looca() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public Sistema getSistema() {
@@ -98,6 +100,5 @@ public class Looca {
     public String toString() {
         return "Looca{" + "sistema=" + sistema + ", memoria=" + memoria + ", processador=" + processador + ", temperatura=" + temperatura + ", grupoDeDiscos=" + grupoDeDiscos + ", grupoDeServicos=" + grupoDeServicos + ", grupoDeProcessos=" + grupoDeProcessos + '}';
     }
-    
-    
+
 }
